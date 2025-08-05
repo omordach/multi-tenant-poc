@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tenant;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,9 +23,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Tenant::create(['id' => 'client1'])
-            ->domains()
-            ->create(['domain' => 'client1.localhost']);
     }
 }
 
