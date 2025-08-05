@@ -25,8 +25,8 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             // Tenancy middleware
-            \Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain::class,
             \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
+            \Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain::class,
 
             // Standard Laravel middleware
             \App\Http\Middleware\EncryptCookies::class,
