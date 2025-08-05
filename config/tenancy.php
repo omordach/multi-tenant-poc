@@ -13,10 +13,11 @@ return [
      
 
     'identification' => [
-    'middleware' => [
-        \Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain::class,
+        'middleware' => [
+            \Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain::class,
+            \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
+        ],
     ],
-],
     /**
      * The list of domains hosting your central app.
      *
