@@ -3,11 +3,11 @@
 @endphp
 
 @if($tenant)
-    <h1>{{ $tenant->name }}</h1>
-    <p>📧 {{ $tenant->contact_email }}</p>
+    <h1>{{ $tenant->data['name'] }}</h1>
+    <p>📧 {{ $tenant->data['contact_email'] }}</p>
 
-    @if($tenant->logo)
-        <img src="{{ asset('storage/logos/' . $tenant->logo) }}" alt="{{ $tenant->name }} logo" style="max-height: 100px;">
+    @if($tenant->data['logo'])
+        <img src="{{ asset('storage/logos/' . $tenant->data['logo']) }}" alt="{{ $tenant->data['name'] }} logo" style="max-height: 100px;">
     @else
         <p>🖼️ No logo uploaded.</p>
     @endif
