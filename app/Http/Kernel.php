@@ -26,7 +26,7 @@ class Kernel extends HttpKernel
         'web' => [
             // Tenancy middleware
             \Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains::class,
-            \Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain::class,
+            \Stancl\Tenancy\Middleware\InitializeTenancyByDomain::class,
 
             // Standard Laravel middleware
             \App\Http\Middleware\EncryptCookies::class,
