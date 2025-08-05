@@ -41,6 +41,12 @@ class TenantSeeder extends Seeder
                 'logo' => $data['logo'],
             ]);
 
+            $tenant->forceFill([
+                'name' => $data['name'],
+                'contact_email' => $data['contact_email'],
+                'logo' => $data['logo'],
+            ])->save();
+
             $tenant->domains()->create([
                 'domain' => $data['domain'],
             ]);
