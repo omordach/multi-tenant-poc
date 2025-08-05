@@ -7,6 +7,20 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Multi-tenant PoC setup
+
+This project demonstrates multi-tenancy using [stancl/tenancy](https://tenancyforlaravel.com/).
+
+### Local domain configuration
+
+Add the following line to your hosts file so that tenant subdomains resolve locally:
+
+```
+127.0.0.1 client1.localhost
+```
+
+After running migrations and seeders, visit `http://client1.localhost` to see the tenant application.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

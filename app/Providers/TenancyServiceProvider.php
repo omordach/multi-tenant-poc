@@ -11,7 +11,12 @@ use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Jobs;
 use Stancl\Tenancy\Listeners;
-use Stancl\Tenancy\Middleware;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
+use Stancl\Tenancy\Middleware\InitializeTenancyByRequestData;
+use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 class TenancyServiceProvider extends ServiceProvider
 {
@@ -98,26 +103,10 @@ class TenancyServiceProvider extends ServiceProvider
     }
 
     public function boot()
-{
-    parent::boot();
-
+    {
         $this->bootEvents();
-        $this->mapRoutes();
-
         $this->makeTenancyMiddlewareHighestPriority();
-
-    Route::middleware(['web'])
-        ->prefix('')
-        ->group(base_path('routes/web.php'));
-
-    // Tenancy-specific routes
-    Route::middleware([
-            'web',
-            InitializeTenancyBySubdomain::class,
-        ])
-        ->group(base_path('routes/tenant.php'));
-
-
+        $this->mapRoutes();
     }
 
     protected function bootEvents()
@@ -137,8 +126,7 @@ class TenancyServiceProvider extends ServiceProvider
     {
         $this->app->booted(function () {
             if (file_exists(base_path('routes/tenant.php'))) {
-                Route::namespace(static::$controllerNamespace)
-                    ->group(base_path('routes/tenant.php'));
+                Route::middleware('web')->group(base_path('routes/tenant.php'));
             }
         });
     }
@@ -147,13 +135,12 @@ class TenancyServiceProvider extends ServiceProvider
     {
         $tenancyMiddleware = [
             // Even higher priority than the initialization middleware
-            Middleware\PreventAccessFromCentralDomains::class,
-
-            Middleware\InitializeTenancyByDomain::class,
-            Middleware\InitializeTenancyBySubdomain::class,
-            Middleware\InitializeTenancyByDomainOrSubdomain::class,
-            Middleware\InitializeTenancyByPath::class,
-            Middleware\InitializeTenancyByRequestData::class,
+            PreventAccessFromCentralDomains::class,
+            InitializeTenancyByDomain::class,
+            InitializeTenancyBySubdomain::class,
+            InitializeTenancyByDomainOrSubdomain::class,
+            InitializeTenancyByPath::class,
+            InitializeTenancyByRequestData::class,
         ];
 
         foreach (array_reverse($tenancyMiddleware) as $middleware) {
